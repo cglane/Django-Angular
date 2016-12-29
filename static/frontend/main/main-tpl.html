@@ -1,0 +1,25 @@
+<div class="page-wrapper">
+  <div class="top-pic">
+    <div class="main-pic">
+      <img ng-src="{{vm.photoObjects['Main'].primary.photo}}" alt="">
+      <span class = "logo">VDL Associates</span>
+    </div>
+    <div class="main-description">
+      <p>{{vm.photoObjects['Main'].primary.comment}}</p>
+    </div>
+  </div>
+  <div class="bottom-half">
+    <div  data-ng-repeat = "album in vm.photoObjects track by $index"class="carousel-wrapper">
+      <carousel-display data-ng-if = "album.name != 'Main'"photos = "album" index = "$index"></carousel-display>
+    </div>
+  </div>
+  <footer>
+    <div class="container">
+      <ul>
+        <li>1 Tradd St. Charleston SC, 29401</li>
+        <li><h3>VDL Associates</h3></li>
+        <li><a href="vdlane@gmail.com" target="_top">vdlane@gmail.com</a></li>
+      </ul>
+    </div>
+  </footer>
+</div>

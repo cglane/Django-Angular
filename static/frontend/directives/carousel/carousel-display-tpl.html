@@ -1,0 +1,25 @@
+  <div class = "slide-wrapper">
+    <div class="slide-description">
+        <img src="{{photos.primary.photo}}" alt="">
+        <div class="description-content">
+          <h3>{{photos.name}}: </h3>
+          <p>{{photos.primary.comment}}</p>
+        </div>
+    </div>
+
+    <div class="slide-collection">
+      <ul class = "{{className}}">
+        <li data-ng-click = "showLarge(photoObj)"class = "tile"data-ng-repeat = "photoObj in photos.secondary">
+          <img  class = "ul-image"src="{{photoObj.photo}}" alt="">
+          <p>{{photoObj.title || photos.name}}  </p>
+        </li>
+      </ul>
+      <div data-ng-click = "moveRight()"class="slider slider-right-arrow">
+        <span class = "glyphicon glyphicon-chevron-right"></span>
+      </div>
+
+      <div data-ng-click = "moveLeft()"class="slider slider-left-arrow">
+        <span class = "glyphicon glyphicon-chevron-left"></span>
+      </div>
+    </div>
+  </div>

@@ -1,20 +1,30 @@
-var path = require('path');
 var Webpack = require('webpack');
+var StatsPlugin = require('stats-webpack-plugin');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var autoprefixer = require('autoprefixer-core');
+var csswring = require('csswring');
 var path = require('path');
+var nodeModulesPath = path.resolve(__dirname, 'node_modules');
+var assetsPath = path.resolve(__dirname, 'assets');
+var entryPath = path.resolve(__dirname, 'frontend', 'app.es6.js');
+var host =  'localhost';
 
-module.exports = {
-  entry: './app.js',
-  output: { path: __dirname, filename: 'static/bundle.js' },
+var config = {
+
+  // Makes sure errors in console map to the correct file
+  // and line number
+  devtool: 'eval',
+  entry: [
+    entryPath
+  ],
+  output: {
+    path: assetsPath,
+    filename: 'bundle.js'
+  },
   module: {
+
     loaders: [
-      {
-        test: /.js/,
-        loader: 'babel-loader',
-        exclude: /node_modules/,
-        query: {
-          presets: ['es2015']
-        }
-      },
+      { test: /\.es6.js$/, exclude: /node_modules/,loader: 'babel-loader' },
       {
         test: /\.css$/,
         loader: 'style!css!postcss'
@@ -30,22 +40,33 @@ module.exports = {
         loader: 'style!css!postcss!less'
       },
       {
-        test: /.html/,
-        loader: 'html'
+        test: /\.html$/,
+        loader: 'html-loader'
+      },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loaders: [
+          'file?hash=sha512&digest=hex&name=[hash].[ext]',
+          'image?bypassOnDebug&optimizationLevel=7&interlaced=false'
+        ]
       }
+
     ]
   },
+  postcss: [autoprefixer],
 
   plugins: [
-  // We have to manually add the Hot Replacement plugin when running
-  // from Node
-  new Webpack.ProvidePlugin({
-  $: "jquery",
-  jQuery: "jquery",
-  "window.jQuery": "jquery"
+    // We have to manually add the Hot Replacement plugin when running
+    // from Node
+    new Webpack.ProvidePlugin({
+    $: "jquery",
+    jQuery: "jquery",
+    "window.jQuery": "jquery"
 }),
   new Webpack.ProvidePlugin({
-      "_": "underscore"
-    })
-]
+    "_": "underscore"
+  })
+  ]
 };
+
+module.exports = config;

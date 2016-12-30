@@ -4,11 +4,9 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var autoprefixer = require('autoprefixer-core');
 var csswring = require('csswring');
 var path = require('path');
-var config = require('./config.js')
 var nodeModulesPath = path.resolve(__dirname, 'node_modules');
-var assetsPath = path.resolve(__dirname, 'public', 'assets');
+var assetsPath = path.resolve(__dirname, 'assets');
 var entryPath = path.resolve(__dirname, 'frontend', 'app.es6.js');
-var host = config.APP_HOST || 'localhost';
 
 var config = {
 
@@ -57,12 +55,7 @@ var config = {
 
     ]
   },
-  node: {
-    console: 'empty',
-    fs: 'empty',
-    net: 'empty',
-    tls: 'empty'
-  },
+
   postcss: [autoprefixer, csswring],
 
   plugins: [
@@ -71,12 +64,14 @@ var config = {
     new ExtractTextPlugin("styles.css"),
     new Webpack.optimize.UglifyJsPlugin({ minimize: true }),
     new StatsPlugin(path.join(__dirname, 'stats.json'), { chunkModules: true }),
-    new Webpack.HotModuleReplacementPlugin(),
     new Webpack.ProvidePlugin({
     $: "jquery",
     jQuery: "jquery",
     "window.jQuery": "jquery"
-    })
+  }),
+  new Webpack.ProvidePlugin({
+    "_": "underscore"
+  })
   ]
 };
 

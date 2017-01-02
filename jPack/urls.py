@@ -1,5 +1,5 @@
 
-from django.conf.urls import url, include
+from django.conf.urls import *
 from django.contrib import admin
 from photos.models import Photo
 from jPack.views import IndexView
